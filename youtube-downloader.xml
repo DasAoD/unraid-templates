@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<Container>
+  <Name>YouTube Downloader</Name>
+  <Repository>#FROM_DOCKERFILE#</Repository> <Registry>https://github.com/<YOUR_GITHUB_USERNAME>/<YOUR_REPO_NAME></Registry> <Branch>main</Branch> <Privileged>false</Privileged>
+  <Support>https://github.com/<YOUR_GITHUB_USERNAME>/<YOUR_REPO_NAME>/issues</Support> <ProjectPage>https://github.com/<YOUR_GITHUB_USERNAME>/<YOUR_REPO_NAME></ProjectPage> <Overview>
+    Ein YouTube-Downloader, der Videos von abonnierten Kanälen/Playlists automatisch herunterlädt.
+    Konfigurierbar über eine Web-Oberfläche. Benötigt eine externe MongoDB-Instanz.
+  </Overview>
+  <Category>MediaServer: Downloaders: Tools:</Category>
+  <WebUI>http://[IP]:[PORT:5000]</WebUI>
+  <TemplateURL/>
+  <Icon>https://raw.githubusercontent.com/<YOUR_GITHUB_USERNAME>/<YOUR_REPO_NAME>/main/icon.png</Icon> <ExtraParams/>
+  <PostArgs/>
+  <CPUset/>
+  <DateInstalled/>
+  <MinVer>6.9.0</MinVer>
+  <DonateText/>
+  <DonateLink/>
+  <Requires/>
+  <Config Name="WebUI Port" Target="5000" Default="5000" Mode="tcp" Description="Der Port für die Web-Oberfläche der Anwendung." Type="Port" Display="always" Required="true" Mask="false"/>
+
+  <Config Name="Appdata Path" Target="/app/data/downloads" Default="/mnt/user/appdata/youtube-downloader/downloads" Mode="rw" Description="Der Pfad auf Ihrem Unraid-System, wohin Videos heruntergeladen werden." Type="Path" Display="always" Required="true" Mask="false">
+    <Recommendation>/mnt/user/appdata/youtube-downloader/downloads</Recommendation>
+  </Config>
+
+  <Config Name="Encryption Key Path" Target="/app/encryption_key.key" Default="/mnt/user/appdata/youtube-downloader/encryption_key.key" Mode="rw" Description="Der Pfad auf Ihrem Unraid-System zum Verschlüsselungsschlüssel. WICHTIG: Dieser Schlüssel muss existieren, da er im Container gemountet wird." Type="Path" Display="advanced" Required="true" Mask="false">
+    <Recommendation>/mnt/user/appdata/youtube-downloader/encryption_key.key</Recommendation>
+  </Config>
+
+  <Config Name="MongoDB URI" Target="MONGO_URI" Default="mongodb://<YOUR_UNRAID_MONGO_DB_IP>:27017/" Mode="env" Description="Die URI Ihrer externen MongoDB-Instanz (z.B. mongodb://192.168.1.100:27017/)" Type="Variable" Display="always" Required="true" Mask="false"/>
+
+  <Config Name="MongoDB Database Name" Target="MONGO_DB_NAME" Default="youtube_downloader_db" Mode="env" Description="Der Name der MongoDB-Datenbank, die verwendet werden soll." Type="Variable" Display="always" Required="true" Mask="false"/>
+
+  <Config Name="Download Path (Container)" Target="DOWNLOAD_PATH" Default="/app/data/downloads" Mode="env" Description="Der interne Pfad im Container, wohin yt-dlp die Videos speichert. Muss mit dem 'Appdata Path' übereinstimmen." Type="Variable" Display="advanced" Required="true" Mask="false"/>
+
+</Container>
